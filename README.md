@@ -4,23 +4,22 @@ This project demonstrates a basic Hardhat use case. It comes with a sample contr
 
 ## Setup
 ```bash
+# Yep I'm aware its in the pack
 nvm install --lts
 npm init -y
-npm install --save-dev hardhat
-npm install --save-dev @nomiclabs/hardhat-waffle ethereum-waffle chai @nomiclabs/hardhat-ethers ethers  
-npm install @openzeppelin/contracts                                                                                                                                                      
 ```
 
 Try running some of the following tasks:
 
 ```shell
+npx hardhat help
+npx hardhat verify YOUR_CONTRACT_ADDRESS --network rinkeby 
 npx hardhat accounts
 npx hardhat compile
 npx hardhat clean
 npx hardhat test
 npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
+node scripts/run.js
 ```
 
 ## Localnet
