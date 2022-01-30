@@ -19,7 +19,8 @@ const main = async () => {
       await txn.wait()
 
       let numMinted = await nftContract.numMinted()
-      console.log("Num minted", parseInt(numMinted, 10))
+      numMinted = numMinted.toNumber()
+      console.log("Num minted", numMinted)
   }
 
   /*
