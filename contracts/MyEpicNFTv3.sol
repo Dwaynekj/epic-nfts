@@ -21,13 +21,24 @@ contract MyEpicNFTv3 is ERC721URIStorage {
     string[] firstWords = ["Frieza", "Vegeta", "Trunks", "Krillin", "Hercules", "Bulma"];
     string[] secondWords = [" Versus ", " Fused With ", " Is Stronger Than ", " Is Weaker Than ", " Is Equal To "];
     string[] thirdWords = ["Cell", "Goku", "Piccolo", "Yamcha", "Gohan", "Buu"];
-
     string[] colors = ["red", "#08C2A8", "black", "yellow", "blue", "green"];
+
+    uint256 public constant maxSupply = 150; //firstWords.length * secondWords.length * thirdWords.length; //150
+    //uint256 public constant maxSupply = 750 //firstWords.length * secondWords.length * thirdWords.length * colors.length; //750
 
     event NewEpicNFTMinted(address sender, uint256 tokenId);
 
     constructor() ERC721 ("SquareNFT", "SQUARE") {
         console.log("This is my NFT contract. Woah!");
+    }
+
+    function safeMint(address to, uint256 tokenId) private {
+        require (tokenId < maxSupply, "All NFTs are Minted");
+        _safeMint(to, tokenId);
+    }
+
+    function numMinted() public view returns (uint256){
+        return _tokenIds.current();
     }
 
     function pickRandomFirstWord(uint256 tokenId) public view returns (string memory) {
@@ -91,11 +102,12 @@ contract MyEpicNFTv3 is ERC721URIStorage {
             abi.encodePacked("data:application/json;base64,", json)
         );
 
+        safeMint(msg.sender, newItemId);
+
         console.log("\n--------------------");
         console.log(finalTokenUri);
+        console.log("\n", randomColor, combinedWord);
         console.log("--------------------\n");
-
-        _safeMint(msg.sender, newItemId);
 
         // Update your URI!!!
         _setTokenURI(newItemId, finalTokenUri);

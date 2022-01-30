@@ -4,11 +4,25 @@ const main = async () => {
   await nftContract.deployed();
   console.log("Contract deployed to:", nftContract.address);
 
-  // Call the function.
-  let txn = await nftContract.makeAnEpicNFT()
-  // Wait for it to be mined.
-  await txn.wait()
 
+  for (let i = 0; i < 151; i++){
+      // Call the function. Intentionally Try to Mint more than allotted
+      if (i === 150) {
+        try {
+           let txn = await nftContract.makeAnEpicNFT()
+        } catch (error) {
+           console.log("Mint Limit Preserved!")
+        }
+      }
+      let txn = await nftContract.makeAnEpicNFT()
+      // Wait for it to be mined.
+      await txn.wait()
+
+      let numMinted = await nftContract.numMinted()
+      console.log("Num minted", parseInt(numMinted, 10))
+  }
+
+  /*
   // Mint another NFT for fun.
   txn = await nftContract.makeAnEpicNFT()
   // Wait for it to be mined.
@@ -18,6 +32,7 @@ const main = async () => {
   txn = await nftContract.makeAnEpicNFT()
   // Wait for it to be mined.
   await txn.wait()
+  */
 };
 
 const runMain = async () => {
